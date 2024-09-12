@@ -12,4 +12,10 @@ def create_app():
     def books(): 
         return 'These are all the books!'
 
+    # register user sblueprint 
+    from . import users
+    app.register_blueprint(users.bp)
+
+    # return the app 
     return app
+
