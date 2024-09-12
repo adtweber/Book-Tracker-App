@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
-    <h1>Welcome to Book-Tracker</h1>         
-</body>
+</head>  
+    <body>
+        <h1>Welcome to Book-Tracker</h1>  
+        <h2>All these people love books</h1>
+        {% for user in users %}
+            <h2>{{ user.user_name }}</h2>
+        {% endfor %}
+    </body>
 </html>
