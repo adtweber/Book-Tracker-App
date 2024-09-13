@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 const BookSearch = () => {
@@ -29,9 +30,10 @@ const BookSearch = () => {
                     <ul>
                         {books.map((book) => (
                             <li key={book.id}>
-                                <h3>{book.volumeInfo.title}</h3>
+                                <h3>
+                                    <Link to={`/books/${book.id}`}>{book.volumeInfo.title}</Link>
+                                </h3>
                                 <p>{book.volumeInfo.authors?.join(', ')}</p>
-                                <p>{book.volumeInfo.description}</p>
                             </li>
                         ))}
                     </ul>

@@ -4,6 +4,7 @@ import BookSearch from './components/BookSearch.js'
 import Header from './components/Header.js'
 import BookList from './components/BookList.js'
 import BookDetails from './components/BookDetails.js'
+import AddBookForm from './components/AddBookForm.js'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<BookSearch />} />
+          <Route path="/addbook" element={<AddBookForm />} />
           <Route path="/booklist" element={<BookList />} />
           <Route path="/books/:id" element={<BookDetails />} />
         </Routes>
