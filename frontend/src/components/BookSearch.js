@@ -19,7 +19,8 @@ const BookSearch = () => {
         const newBook = {
             title: book.volumeInfo.title,
             author: book.volumeInfo.authors?.join(', ') || 'Unknown Author',
-            status: 'Want to Read',  // You can customize the status as per your app's requirement
+            cover: book.volumeInfo.imageLinks?.thumbnail, // Added optional chaining
+            status: 'Want to Read',  // Customize the status as per your app's requirement
         };
 
         try {
@@ -51,6 +52,7 @@ const BookSearch = () => {
                                 <h3>
                                     <Link to={`/books/${book.id}`}>{book.volumeInfo.title}</Link>
                                 </h3>
+                                <img src={book.volumeInfo.imageLinks?.thumbnail} alt={book.volumeInfo.title} />
                                 <p>{book.volumeInfo.authors?.join(', ')}</p>
                                 <button onClick={() => addBook(book)}>Save to My Books</button>
                             </li>
