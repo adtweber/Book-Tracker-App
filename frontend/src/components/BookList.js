@@ -8,7 +8,7 @@ const BookList = () => {
     useEffect(() => {
         const fetchSavedBooks = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/mybooks');
+                const response = await axios.get('http://localhost:5000/mybooks/');
                 setBooks(response.data);  // Assuming the backend returns a list of saved books
             } catch (error) {
                 console.error('Error fetching saved books', error);
@@ -26,6 +26,7 @@ const BookList = () => {
                     {books.map((book) => (
                         <li key={book.id}>
                             <h3>{book.title}</h3>
+                            <img src={book.cover} alt=""></img>
                             <p>Author: {book.author}</p>
                             <p>Status: {book.status}</p>
                         </li>
