@@ -23,7 +23,7 @@ const BookSearch = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:5000/mybooks', newBook, {
+            const response = await axios.post('http://localhost:5000/mybooks/', newBook, {
                 headers: { 'Content-Type': 'application/json' },
             });
             console.log('Book added:', response.data);
