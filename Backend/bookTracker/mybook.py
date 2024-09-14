@@ -15,10 +15,11 @@ def books():
         data = request.get_json()
         title = data.get('title')
         author = data.get('author')
+        cover = data.get('cover')
         status = data.get('status', 'Want to Read')
 
         # Create a new book entry
-        new_book = Book(title=title, author=author, status=status)
+        new_book = Book(title=title, author=author, cover=cover, status=status)
         db.session.add(new_book)
         db.session.commit()
 
