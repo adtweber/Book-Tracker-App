@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const BookSearch = () => {
     const [query, setQuery] = useState('');
@@ -11,9 +11,27 @@ const BookSearch = () => {
             const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
             setBooks(response.data.items || []);
         } catch (error) {
-            console.error('Error fetching data from Google Books', error)
+            console.error('Error fetching data from Google Books', error);
         }
     };
+
+    const addBook = async (book) => {
+        const newBook = {
+            title: book.volumeInfo.title,
+            author: book.volumeInfo.authors?.join(', ') || 'Unknown Author',
+            status: 'Want to Read',  // You can customize the status as per your app's requirement
+        };
+
+        try {
+            const response = await axios.post('http://localhost:5000/mybooks', newBook, {
+                headers: { 'Content-Type': 'application/json' },
+            });
+            console.log('Book added:', response.data);
+        } catch (error) {
+            console.error('Error saving book to the database', error);
+        }
+    };
+
     return (
         <div>
             <h2>Search for Books</h2>
@@ -23,7 +41,7 @@ const BookSearch = () => {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Enter title or author"
             />
-            <button onClick={fetchBooks}></button>
+            <button onClick={fetchBooks}>Search</button>
 
             <div>
                 {books.length > 0 ? (
@@ -34,6 +52,7 @@ const BookSearch = () => {
                                     <Link to={`/books/${book.id}`}>{book.volumeInfo.title}</Link>
                                 </h3>
                                 <p>{book.volumeInfo.authors?.join(', ')}</p>
+                                <button onClick={() => addBook(book)}>Save to My Books</button>
                             </li>
                         ))}
                     </ul>
@@ -42,7 +61,7 @@ const BookSearch = () => {
                 )}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default BookSearch
+export default BookSearch;
