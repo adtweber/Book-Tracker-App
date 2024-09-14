@@ -1,11 +1,13 @@
 #config
 from flask import Flask 
 from flask_migrate import Migrate 
+from flask_cors import CORS
 
 #factory
 def create_app(): 
     app = Flask(__name__)
-
+    CORS(app)
+    
     #database config
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/Book-Tracker'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False    
@@ -24,11 +26,15 @@ def create_app():
         return 'These are all the books!'
 
     # register user sblueprint 
-    from . import users
-    app.register_blueprint(users.bp)
+    # from . import users
+    # app.register_blueprint(users.bp)
+
+    from . import mybook
+    app.register_blueprint(mybook.bp)
 
     # return the app 
     return app
+
 
 
 
