@@ -19,18 +19,10 @@ def create_app():
     # CORS and Preflight request handling
     @app.after_request
     def after_request(response):
+        # response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000') 
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
         response.headers.add('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
         return response
-        
-    @app.route('/')
-    def hello(): 
-        return 'Hello, BookWorms!'
-
-    # books index route
-    @app.route('/books')
-    def books(): 
-        return 'These are all the books!'
 
     # register user sblueprint 
     # from . import users
@@ -38,6 +30,9 @@ def create_app():
 
     from . import mybook
     app.register_blueprint(mybook.bp)
+
+    from . import routes
+    app.register_blueprint(routes.auth_bp)
 
     # return the app 
     return app
