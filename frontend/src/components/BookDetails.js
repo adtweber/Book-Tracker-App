@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import BookStatus from './BookStatus'
 
 const BookDetails = ({ books }) => {
     const { id } = useParams()
@@ -21,6 +22,7 @@ const BookDetails = ({ books }) => {
             <p>Description: {book.description}</p>
             <p>Publisher: {book.publisher}</p>
             <p>Published Date: {book.publishedDate}</p>
+            <BookStatus bookId={id} initialStatus={book.status} />
         </div>
     );
 };
