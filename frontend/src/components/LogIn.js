@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { CurrentUser } from "../contexts/CurrentUser";
+// import { CurrentUser } from "../contexts/CurrentUser";
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -12,17 +12,24 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/login/', { email, password })
-
+            const response = await axios.post('http://localhost:5000/login/', 
+                { email, password },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',  
+                    }
+                }
+            );
+    
             if (response.data.token) {
-                localStorage.setItem('authToken', response.data.token)
-
-                navigate('/')
+                localStorage.setItem('authToken', response.data.token);
+                navigate('/');
             }
         } catch (err) {
-            setError('Invalid email or password. Please try again.')
+            setError('Invalid email or password. Please try again.');
         }
-    }
+    };
+    
 
     return (
         <div>
