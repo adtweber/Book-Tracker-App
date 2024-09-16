@@ -6,8 +6,12 @@ from bookTracker.models import db, User
 auth_bp = Blueprint('login', __name__, url_prefix='/login')
 
 # Login Endpoint
-@auth_bp.route('/login', methods=['POST'])
+@auth_bp.route('/', methods=['OPTIONS','POST'])
 def login():
+    if request.method == 'OPTIONS':
+        # CORS preflight response
+        return '', 200
+
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')

@@ -27,21 +27,21 @@ def signup():
 
 
 # Login Endpoint
-@auth_bp.route('/login', methods=['POST'])
-def login():
-    data = request.get_json()
-    email = data.get('email')
-    password = data.get('password')
+# @auth_bp.route('/login', methods=['POST'])
+# def login():
+#     data = request.get_json()
+#     email = data.get('email')
+#     password = data.get('password')
 
-    user = User.query.filter_by(email=email).first()
+#     user = User.query.filter_by(email=email).first()
 
-    if user is None or not user.check_password(password):
-        return jsonify({"error": "Invalid email or password"}), 401
+#     if user is None or not user.check_password(password):
+#         return jsonify({"error": "Invalid email or password"}), 401
 
-    # Generate a JWT token
-    token = jwt.encode({
-        'user_id': user.id,
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
-    }, app.config['SECRET_KEY'])
+#     # Generate a JWT token
+#     token = jwt.encode({
+#         'user_id': user.id,
+#         'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+#     }, app.config['SECRET_KEY'])
 
-    return jsonify({'token': token}), 200
+#     return jsonify({'token': token}), 200
