@@ -3,28 +3,7 @@ import jwt
 import datetime
 from bookTracker.models import db, User 
 
-auth_bp = Blueprint('signup', __name__, url_prefix='/signup')
-
-# Sign-Up Endpoint
-@auth_bp.route('/', methods=['POST'])
-def signup():
-    data = request.get_json()
-    email = data.get('email')
-    password = data.get('password')
-
-    # Check if the email is already registered
-    if User.query.filter_by(email=email).first():
-        return jsonify({"error": "Email already registered"}), 400
-
-    # Create a new user, and the password will be hashed automatically
-    new_user = User(email=email, password=password)
-
-    # Add the new user to the session and commit
-    db.session.add(new_user)
-    db.session.commit()
-
-    return jsonify({"message": "User created successfully"}), 201
-
+auth_bp = Blueprint('login', __name__, url_prefix='/login')
 
 # Login Endpoint
 @auth_bp.route('/login', methods=['POST'])
