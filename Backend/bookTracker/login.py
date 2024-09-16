@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 import jwt
 import datetime
 from bookTracker.models import db, User 
@@ -22,9 +22,11 @@ def login():
         return jsonify({"error": "Invalid email or password"}), 401
 
     # Generate a JWT token
-    token = jwt.encode({
-        'user_id': user.id,
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
-    }, app.config['SECRET_KEY'])
+    # token = jwt.encode({
+    #     'user_id': user.id,
+    #     'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+    # }, current_app.config['SECRET_KEY'], algorithm='HS256')
 
-    return jsonify({'token': token}), 200
+    # return jsonify({'token': token}), 200
+
+    return jsonify({"message": "User created successfully"}), 201
