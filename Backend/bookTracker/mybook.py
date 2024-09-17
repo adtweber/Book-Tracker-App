@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, Blueprint
-from flask_jwt_extended import jwt_required, get_jwt_identity  # Import JWT utilities
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from bookTracker.models import db, Book  # Assuming you have a Book model and db
 
 # Create a Blueprint for 'mybooks'

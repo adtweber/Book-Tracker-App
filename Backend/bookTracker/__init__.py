@@ -2,6 +2,7 @@
 from flask import Flask 
 from flask_migrate import Migrate 
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 
 #factory
 def create_app(): 
@@ -14,6 +15,7 @@ def create_app():
 
     # Test SECRET_KEY
     app.config['SECRET_KEY'] = 'mysecretkey123'  # Temporary key for testing  
+    app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Set JWT secret key for signing tokens
 
     from . import models
     models.db.init_app(app)

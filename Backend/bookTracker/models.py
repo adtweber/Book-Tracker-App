@@ -35,7 +35,7 @@ class Book(db.Model):
             'title': self.title,
             'author': self.author,
             'cover': self.cover,
-            'status': self.status
+            'status': self.status,
             'user_id': self.user_id  # Include user ID
         }
 
