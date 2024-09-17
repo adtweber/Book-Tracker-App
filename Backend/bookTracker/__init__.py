@@ -10,7 +10,10 @@ def create_app():
 
     #database config
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/Book-Tracker'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False    
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  
+
+    # Test SECRET_KEY
+    app.config['SECRET_KEY'] = 'mysecretkey123'  # Temporary key for testing  
 
     from . import models
     models.db.init_app(app)
