@@ -4,6 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 # Initialize the database
 db = SQLAlchemy()
 
+user_books = db.Table('user_books',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('book_id', db.Integer, db.ForeignKey('books.id'), primary_key=True)
+)
+
 # Define the Book model
 class Book(db.Model):
     __tablename__ = 'books'
@@ -13,6 +18,9 @@ class Book(db.Model):
     author = db.Column(db.String(200), nullable=False)
     cover = db.Column(db.String(200), nullable=False)
     status = db.Column(db.String(50), nullable=False, default="Want to Read")
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Link to the User model
+
+    user = db.relationship('user', backref='books', lazy=True)  # Establish the relationship
 
     def __init__(self, title, author, cover, status):
         self.title = title
@@ -28,6 +36,7 @@ class Book(db.Model):
             'author': self.author,
             'cover': self.cover,
             'status': self.status
+            'user_id': self.user_id  # Include user ID
         }
 
 # Define the User model
