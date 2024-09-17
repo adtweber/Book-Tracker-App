@@ -7,7 +7,7 @@ import BookDetails from './components/BookDetails.js'
 import AddBookForm from './components/AddBookForm.js'
 import LogIn from './components/LogIn.js'
 import SignUp from './components/SignUp.js'
-import { CurrentUserProvider } from './contexts/CurrentUser'
+import CurrentUserProvider from './components/CurrentUser'
 
 function App() {
   return (

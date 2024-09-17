@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'
+import { CurrentUser } from './CurrentUser';
 
 const Header = () => {
+
+    const { currentUser } = useContext(CurrentUser);
+
     return (
         <header>
         <h1>Andi & Judd's Book Tracker</h1>
