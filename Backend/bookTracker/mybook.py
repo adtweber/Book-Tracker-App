@@ -18,6 +18,14 @@ def books():
         cover = data.get('cover')
         status = data.get('status', 'Want to Read')
 
+        # Get the logged-in user's ID from the JWT token
+        current_user_id = get_jwt_identity()
+
+        # Create a new book entry associated with the logged-in user
+        new_book = Book(title=title, author=author, cover=cover, status=status, user_id=current_user_id)
+        db.session.add(new_book)
+        db.session.commit()
+
         # Create a new book entry
         new_book = Book(title=title, author=author, cover=cover, status=status)
         db.session.add(new_book)
@@ -26,7 +34,11 @@ def books():
         return jsonify({"message": "Book added successfully!", "book": new_book.id}), 201
 
     elif request.method == 'GET':
-        # Retrieve all books and convert them to JSON
-        books = Book.query.all()
-        books_json = [book.to_dict() for book in books]  # Assuming each Book model has a to_dict() method
+        # Get the logged-in user's ID from the JWT token
+        current_user_id = get_jwt_identity()
+
+        # Retrieve books for the logged-in user only
+        user_books = Book.query.filter_by(user_id=current_user_id).all()
+        books_json = [book.to_dict() for book in user_books]  # Assuming each Book model has a to_dict() method
+
         return jsonify(books_json)
