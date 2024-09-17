@@ -7,25 +7,28 @@ import BookDetails from './components/BookDetails.js'
 import AddBookForm from './components/AddBookForm.js'
 import LogIn from './components/LogIn.js'
 import SignUp from './components/SignUp.js'
+import CurrentUserProvider from './components/CurrentUser'
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Header />
-        <p>Welcome to the book tracker app!</p>
+    <CurrentUserProvider> 
+      <Router>
+        <div className="App">
+          <Header />
+          <p>Welcome to the book tracker app!</p>
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/search" element={<BookSearch />} />
-          <Route path="/addbook" element={<AddBookForm />} />
-          <Route path="/booklist" element={<BookList />} />
-          <Route path="/books/:id" element={<BookDetails />} />
-        </Routes>
-      </div>
-    </Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/search" element={<BookSearch />} />
+            <Route path="/addbook" element={<AddBookForm />} />
+            <Route path="/booklist" element={<BookList />} />
+            <Route path="/books/:id" element={<BookDetails />} />
+          </Routes>
+        </div>
+      </Router>
+    </CurrentUserProvider>
   );
 }
 
