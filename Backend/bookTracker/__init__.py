@@ -6,7 +6,7 @@ from flask_cors import CORS
 #factory
 def create_app(): 
     app = Flask(__name__)
-    CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+    CORS(app, origins=["http://localhost:3000"])
 
     #database config
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/Book-Tracker'
@@ -18,6 +18,7 @@ def create_app():
     @app.after_request
     def after_request(response):
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        response.headers.add('Access-Control-Allow-Credentials', 'true')
         response.headers.add('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
         return response
 
