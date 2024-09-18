@@ -23,17 +23,12 @@ const Login = () => {
                     }
                 }
             );
-    
-            if (response.data.access_token) {
-                localStorage.setItem('authToken', response.data.access_token);
-                setCurrentUser(response.data.user);
-                navigate('/');
-            }
+            setCurrentUser(response.data.user);
+            navigate('/');
         } catch (err) {
             setError('Invalid email or password. Please try again.');
         }
     };
-    
 
     return (
         <div>

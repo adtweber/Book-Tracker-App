@@ -1,23 +1,44 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState,  } from 'react';
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { CurrentUser } from './CurrentUser';
 
 const Header = () => {
 
-    const { currentUser } = useContext(CurrentUser);
+    const { setCurrentUser } = useContext(CurrentUser);
+    const [error, setError] = useState('')
+    const navigate = useNavigate()
 
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post('http://localhost:5000/logout/', {}, {
+                headers: {
+                    'Content-Type': 'application/json',  
+                }
+        });
+        setCurrentUser(null);
+        navigate('/');
+        } catch (err) {
+            setError('Could Not Logout');
+            alert('An error occurred while logging out. Please try again.');
+        }
+    };
+    
     return (
         <header>
         <h1>Andi & Judd's Book Tracker</h1>
         <nav>
             <ul>
                 <li><Link to="/">Home</Link></li>
-                {currentUser ? (
+                {CurrentUser ? (
                     <>
                         <li><Link to="/search">Search Books</Link></li>
                         <li><Link to="/addbook">Add Books</Link></li>
                         <li><Link to="/booklist">My Books</Link></li>
-                        <li>Welcome, {currentUser.email}!</li>
+                        <li>Welcome, {CurrentUser.email}!</li>
+                        <button onClick={handleLogout}>Logout</button>
                     </>
                 ) : (
                     <>
