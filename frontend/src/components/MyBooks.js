@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 function books() {
 	const [books, setBooks] = useState([]);
 
-	// FETCH all games from the server on component mount //
+	// FETCH all books from the server on component mount //
 	useEffect(() => {
 		const fetchData = async () => {
 			const response = await fetch(`http://localhost:5000/mybooks`);

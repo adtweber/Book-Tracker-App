@@ -16,18 +16,30 @@ const BookSearch = () => {
     };
 
     const addBook = async (book) => {
-        const newBook = {
-            title: book.volumeInfo.title,
-            author: book.volumeInfo.authors?.join(', ') || 'Unknown Author',
-            cover: book.volumeInfo.imageLinks?.thumbnail, // Added optional chaining
-            status: 'Want to Read',  // Customize the status as per your app's requirement
-        };
+         // Get the token from localStorage
+        const token = localStorage.getItem('authToken');
 
+        if (!token) {
+            console.error('No JWT token found. Please log in.');
+            return;
+        }
         try {
+            const newBook = {
+                title: book.volumeInfo.title,
+                author: book.volumeInfo.authors?.join(', ') || 'Unknown Author',
+                cover: book.volumeInfo.imageLinks?.thumbnail, 
+                status: 'Want to Read', 
+            };
+    
             const response = await axios.post('http://localhost:5000/mybooks/', newBook, {
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Authorization': `Bearer ${token}`,  
+                    'Content-Type': 'application/json',
+                },
             });
+
             console.log('Book added:', response.data);
+            setBooks(response.data); 
         } catch (error) {
             console.error('Error saving book to the database', error);
         }

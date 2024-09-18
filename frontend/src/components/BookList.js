@@ -9,7 +9,20 @@ const BookList = () => {
     useEffect(() => {
         const fetchSavedBooks = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/mybooks/');
+                // Get the JWT token from localStorage
+                const token = localStorage.getItem('authToken');
+
+                if (!token) {
+                    console.error('No JWT token found. Please log in.');
+                    return;
+                }
+                // Include the JWT token in the headers
+                const response = await axios.get('http://localhost:5000/mybooks/', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
                 setBooks(response.data);  // Assuming the backend returns a list of saved books
             } catch (error) {
                 console.error('Error fetching saved books', error);

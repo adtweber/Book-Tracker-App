@@ -24,8 +24,8 @@ const Login = () => {
                 }
             );
     
-            if (response.data.token) {
-                localStorage.setItem('authToken', response.data.token);
+            if (response.data.access_token) {
+                localStorage.setItem('authToken', response.data.access_token);
                 setCurrentUser(response.data.user);
                 navigate('/');
             }
