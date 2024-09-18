@@ -1,11 +1,14 @@
 from flask import Flask, request, jsonify, Blueprint
-from bookTracker.models import db, Book  # Assuming you have a Book model and db
+from bookTracker.models import db, Book 
+from flask_jwt_extended import jwt_required, get_jwt_identity
+
 
 # Create a Blueprint for 'mybooks'
 bp = Blueprint('mybooks', __name__, url_prefix='/mybooks')
 
 
 @bp.route('/', methods=['GET', 'POST', 'OPTIONS'])
+@jwt_required()
 def books():
     if request.method == 'OPTIONS':
         # Handle preflight CORS request
@@ -23,8 +26,8 @@ def books():
 
         # Create a new book entry associated with the logged-in user
         new_book = Book(title=title, author=author, cover=cover, status=status, user_id=current_user_id)
-        db.session.add(new_book)
-        db.session.commit()
+        # db.session.add(new_book)
+        # db.session.commit()
 
         # Create a new book entry
         new_book = Book(title=title, author=author, cover=cover, status=status)

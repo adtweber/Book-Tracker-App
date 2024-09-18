@@ -2,6 +2,7 @@
 from flask import Flask 
 from flask_migrate import Migrate 
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 
 #factory
 def create_app(): 
@@ -14,6 +15,10 @@ def create_app():
 
     # Test SECRET_KEY
     app.config['SECRET_KEY'] = 'mysecretkey123'  # Temporary key for testing  
+    app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'
+
+    # Initialize JWT
+    jwt = JWTManager(app)
 
     from . import models
     models.db.init_app(app)
@@ -22,7 +27,6 @@ def create_app():
     # CORS and Preflight request handling
     @app.after_request
     def after_request(response):
-        response.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000') 
         response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
         response.headers.add('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
         return response
