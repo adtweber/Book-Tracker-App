@@ -32,6 +32,6 @@ def books():
 
     elif request.method == 'GET':
         # Retrieve all books and convert them to JSON
-        books = Book.query.all()
-        books_json = [book.to_dict() for book in books]  # Assuming each Book model has a to_dict() method
-        return jsonify(books_json)
+        user_books = Book.query.filter_by(user_id=user_id).all()
+        books_json = [book.to_dict() for book in user_books]
+        return jsonify(books_json), 200
