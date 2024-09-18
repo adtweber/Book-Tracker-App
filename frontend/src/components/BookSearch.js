@@ -24,6 +24,11 @@ const BookSearch = () => {
         };
 
         const token = localStorage.getItem('authToken'); // Retrieve token from localStorage
+
+        if (!token) {
+            console.error('No token found in localStorage.');
+            return; // Exit early if token is missing
+        }
         
         try {
             const response = await axios.post('http://localhost:5000/mybooks/', newBook, {
