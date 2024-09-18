@@ -10,15 +10,12 @@ def mybooks():
     if request.method == 'OPTIONS':
         # CORS preflight response
         return '', 200
+
     # Get the current user's ID from the session
     user_id = session.get('user_id')
 
     if not user_id:
         return jsonify({"error": "Not authenticated"}), 401
-
-    # Retrieve books for the logged-in user only
-    user_books = Book.query.filter_by(user_id=user_id).all()
-    books_json = [book.to_dict() for book in user_books]
 
     if request.method == 'POST':
         # Ensure the user is logged in
