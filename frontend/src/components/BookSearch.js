@@ -23,9 +23,19 @@ const BookSearch = () => {
             status: 'Want to Read',  // Customize the status as per your app's requirement
         };
 
+        const token = localStorage.getItem('authToken'); // Retrieve token from localStorage
+
+        if (!token) {
+            console.error('No token found in localStorage.');
+            return; // Exit early if token is missing
+        }
+        
         try {
             const response = await axios.post('http://localhost:5000/mybooks/', newBook, {
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    Authorization: `Bearer ${token}`  // Attach token in Authorization header
+                },
             });
             console.log('Book added:', response.data);
         } catch (error) {

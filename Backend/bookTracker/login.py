@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
-import jwt
-import datetime
+from flask_jwt_extended import create_access_token
+from datetime import timedelta
 from bookTracker.models import db, User 
 
 auth_bp = Blueprint('login', __name__, url_prefix='/login')
@@ -21,15 +21,13 @@ def login():
     if user is None or not user.check_password(password):
         return jsonify({"error": "Invalid email or password"}), 401
 
-    # Generate a JWT token
-    token = jwt.encode({
-        'user_id': user.id,
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
-    }, current_app.config['SECRET_KEY'], algorithm='HS256')
+    access_token = create_access_token(identity=user.id, expires_delta=timedelta(hours=1))
+        
+    return jsonify(token=access_token, user={"email": user.email, "id": user.id}), 200
 
     # Return the token and user information
     return jsonify({
-        'token': token,
+        'token': access_token,
         'user': {
             'id': user.id,
             'email': user.email
