@@ -20,7 +20,8 @@ const Login = () => {
                 {
                     headers: {
                         'Content-Type': 'application/json',  
-                    }
+                    },
+                    withCredentials: true  // Include this to send and store cookies
                 }
             );
             setCurrentUser(response.data.user);

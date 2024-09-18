@@ -15,7 +15,8 @@ const Header = () => {
             const response = await axios.post('http://localhost:5000/logout/', {}, {
                 headers: {
                     'Content-Type': 'application/json',  
-                }
+                },
+                withCredentials: true,  // Include this to send the session cookie
         });
         setCurrentUser(null);
         navigate('/');

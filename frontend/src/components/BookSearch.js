@@ -1,13 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { CurrentUser } from "./CurrentUser"
 
 const BookSearch = () => {
     const [query, setQuery] = useState('');
     const [books, setBooks] = useState([]);
-
-    const { currentUser } = useContext(CurrentUser);
 
     const fetchBooks = async () => {
         try {
@@ -19,28 +16,19 @@ const BookSearch = () => {
     };
 
     const addBook = async (book) => {
+        const newBook = {
+            title: book.volumeInfo.title,
+            author: book.volumeInfo.authors?.join(', ') || 'Unknown Author',
+            cover: book.volumeInfo.imageLinks?.thumbnail, // Added optional chaining
+            status: 'Want to Read',  // Customize the status as per your app's requirement
+        };
 
-        if (!currentUser) {
-            console.error('No Current User found');
-            return;
-        }
         try {
-            const newBook = {
-                title: book.volumeInfo.title,
-                author: book.volumeInfo.authors?.join(', ') || 'Unknown Author',
-                cover: book.volumeInfo.imageLinks?.thumbnail, 
-                status: 'Want to Read', 
-            };
-    
             const response = await axios.post('http://localhost:5000/mybooks/', newBook, {
-                headers: { 
-                    'Content-Type': 'application/json',
-                },
-                withCredentials: true,  // Include session cookies
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true,  // Include this to send the session cookie
             });
-
             console.log('Book added:', response.data);
-            setBooks(response.data); 
         } catch (error) {
             console.error('Error saving book to the database', error);
         }

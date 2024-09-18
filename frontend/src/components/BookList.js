@@ -15,6 +15,7 @@ const BookList = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
+                    withCredentials: true,  // Include this to send the session cookie
                 });
                 setBooks(response.data);  // Assuming the backend returns a list of saved books
             } catch (error) {
