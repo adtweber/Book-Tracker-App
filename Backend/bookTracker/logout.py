@@ -8,4 +8,4 @@ def logout():
         # CORS preflight response
         return '', 200
     session.clear()  # Clears all session data
-    return redirect(url_for('login'))
+    return 'logout successfull'
