@@ -13,7 +13,7 @@ const Header = () => {
     const handleLogout = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/logout/', {}, {
+            const response = await axios.post('http://localhost:5000/logout/', {}, {
                 headers: {
                     'Content-Type': 'application/json',  
                 }
