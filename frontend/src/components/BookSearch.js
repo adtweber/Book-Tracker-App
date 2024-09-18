@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { CurrentUser } from "./CurrentUser"
 
 const BookSearch = () => {
     const [query, setQuery] = useState('');
     const [books, setBooks] = useState([]);
+
+    const { currentUser } = useContext(CurrentUser);
 
     const fetchBooks = async () => {
         try {
@@ -16,11 +19,9 @@ const BookSearch = () => {
     };
 
     const addBook = async (book) => {
-         // Get the token from localStorage
-        const token = localStorage.getItem('authToken');
 
-        if (!token) {
-            console.error('No JWT token found. Please log in.');
+        if (!currentUser) {
+            console.error('No Current User found');
             return;
         }
         try {
@@ -32,10 +33,10 @@ const BookSearch = () => {
             };
     
             const response = await axios.post('http://localhost:5000/mybooks/', newBook, {
-                headers: {
-                    'Authorization': `Bearer ${token}`,  
+                headers: { 
                     'Content-Type': 'application/json',
                 },
+                withCredentials: true,  // Include session cookies
             });
 
             console.log('Book added:', response.data);

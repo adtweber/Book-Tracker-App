@@ -1,25 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext, } from 'react'
 import axios from 'axios'
 import BookStatus from './BookStatus'
+import { CurrentUser } from './CurrentUser';
 
 const BookList = () => {
     const [books, setBooks] = useState([]);
+    // const { setCurrentUser } = useContext(CurrentUser)
 
     // Fetch the saved books from the backend
     useEffect(() => {
         const fetchSavedBooks = async () => {
             try {
-                // Get the JWT token from localStorage
-                const token = localStorage.getItem('authToken');
-
-                if (!token) {
-                    console.error('No JWT token found. Please log in.');
-                    return;
-                }
-                // Include the JWT token in the headers
                 const response = await axios.get('http://localhost:5000/mybooks/', {
                     headers: {
-                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     },
                 });

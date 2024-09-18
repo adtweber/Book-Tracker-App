@@ -6,8 +6,7 @@ import { CurrentUser } from './CurrentUser';
 
 const Header = () => {
 
-    const { setCurrentUser } = useContext(CurrentUser);
-    const [error, setError] = useState('')
+    const { currentUser, setCurrentUser } = useContext(CurrentUser);
     const navigate = useNavigate()
 
     const handleLogout = async (e) => {
@@ -21,7 +20,7 @@ const Header = () => {
         setCurrentUser(null);
         navigate('/');
         } catch (err) {
-            setError('Could Not Logout');
+
             alert('An error occurred while logging out. Please try again.');
         }
     };
@@ -32,12 +31,12 @@ const Header = () => {
         <nav>
             <ul>
                 <li><Link to="/">Home</Link></li>
-                {CurrentUser ? (
+                {currentUser ? (
                     <>
                         <li><Link to="/search">Search Books</Link></li>
                         <li><Link to="/addbook">Add Books</Link></li>
                         <li><Link to="/booklist">My Books</Link></li>
-                        <li>Welcome, {CurrentUser.email}!</li>
+                        <li>Welcome, {currentUser.email}!</li>
                         <button onClick={handleLogout}>Logout</button>
                     </>
                 ) : (
