@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, current_app
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token,jwt_required, get_jwt_identity
 from datetime import timedelta
 from bookTracker.models import db, User 
 
@@ -33,3 +33,14 @@ def login():
             'email': user.email
         }
     }), 200
+
+@auth_bp.route('/profile', methods=['GET'])
+@jwt_required()  # Require a valid JWT token
+def profile():
+    current_user_id = get_jwt_identity()  # Get the user's ID from the token
+    user = User.query.get(current_user_id)  # Query the user from the database
+
+    if user:
+        return jsonify(user={"email": user.email, "id": user.id}), 200
+    else:
+        return jsonify({"message": "User not found"}), 404
