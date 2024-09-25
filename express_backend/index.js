@@ -7,9 +7,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// routes // 
+// CONTROLLERS 
+const booksController = require('./controllers/books')
+app.use('/books', booksController)
 
-// home page or default landing //
+// home page //
 app.get('/', (req, res) => {
     res.send('Hello Team!');
 });
