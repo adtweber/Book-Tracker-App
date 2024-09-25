@@ -2,13 +2,15 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser')
 const cookieSession = require('cookie-session')
+const defineCurrentUser = require('./middleware/defineCurrentUser')
 
 // Express Settings
 app.use(cookieSession({
     name: 'session',
     keys: [ process.env.SESSION_SECRET ],
-    maxAge: 1 * 60 * 60 * 1000 // 24 hours
+    maxAge: 1 * 60 * 60 * 1000 // 1 hour
 }))
 app.use(cors({
     origin: 'http://localhost:3000',
@@ -17,6 +19,7 @@ app.use(cors({
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(defineCurrentUser)
 
 // middleware to parse JSON bodies //
 app.use(express.json());
