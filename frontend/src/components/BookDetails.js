@@ -1,30 +1,75 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import BookStatus from './BookStatus'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';  // To get book ID from the URL
 
-const BookDetails = ({ books }) => {
-    const { id } = useParams()
-    const [book, setBook] = useState(null);
+const BookDetails = () => {
+    const { id } = useParams(); // Get book ID from the URL
+    const [book, setBook] = useState(null);  // Store the book details
+    const [loading, setLoading] = useState(true); // Loading state
 
     useEffect(() => {
-        const foundBook = books.find(b => b.id === id);
-        setBook(foundBook);
-    }, [id, books]);
+        // Fetch book details by ID
+        const fetchBookDetails = async () => {
+            try {
+                const response = await axios.get(`/api/books/${id}`);
+                setBook(response.data); // Store the book details in state
+                setLoading(false); // Stop loading once data is fetched
+            } catch (error) {
+                console.error('Error fetching book details:', error);
+                setLoading(false); // Stop loading even if there is an error
+            }
+        };
 
-    if (!book) {
-        return <p>Loading book details...</p>;
-    }
+        fetchBookDetails();
+    }, [id]); // Dependency array ensures this runs when the component loads
+
+    // Function to handle the book status change
+    const handleStatusChange = async (newStatus) => {
+        try {
+            await axios.put(`/api/books/${id}/status`, { status: newStatus });
+            setBook((prevBook) => ({ ...prevBook, status: newStatus }));
+        } catch (error) {
+            console.error('Error updating book status:', error);
+        }
+    };
+
+    if (loading) return <div>Loading book details...</div>;
 
     return (
-        <div>
-            <h2>{book.title}</h2>
-            <p>Author: {book.authors?.join(', ')}</p>
-            <p>Description: {book.description}</p>
-            <p>Publisher: {book.publisher}</p>
-            <p>Published Date: {book.publishedDate}</p>
-            <BookStatus bookId={id} initialStatus={book.status} />
+        <div className="container mt-4">
+            {book ? (
+                <div>
+                    <h1>{book.title}</h1>
+                    <h2>{book.author}</h2>
+                    <p>{book.description}</p>
+
+                    {/* Status Toggle Buttons */}
+                    <div className="btn-group" role="group">
+                        <button
+                            className={`btn btn-outline-primary ${book.status === 'Want to Read' ? 'active' : ''}`}
+                            onClick={() => handleStatusChange('Want to Read')}
+                        >
+                            Want to Read
+                        </button>
+                        <button
+                            className={`btn btn-outline-warning ${book.status === 'Reading' ? 'active' : ''}`}
+                            onClick={() => handleStatusChange('Reading')}
+                        >
+                            Reading
+                        </button>
+                        <button
+                            className={`btn btn-outline-success ${book.status === 'Finished' ? 'active' : ''}`}
+                            onClick={() => handleStatusChange('Finished')}
+                        >
+                            Finished
+                        </button>
+                    </div>
+                </div>
+            ) : (
+                <div>Book not found</div>
+            )}
         </div>
     );
 };
 
-export default BookDetails
+export default BookDetails;
