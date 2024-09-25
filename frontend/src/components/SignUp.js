@@ -13,9 +13,9 @@ const SignUp = () => {
         try {
             const response = await axios.post('http://localhost:5000/users', { email, password, })
 
-            // if (response.data.success) {
-            //     navigate('/login')
-            // }
+            if (response.data.success) {
+                navigate('/login')
+            }
         } catch (err) {
             setError('Error signing up. Please try again.')
         }
