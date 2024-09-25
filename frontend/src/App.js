@@ -8,6 +8,7 @@ import AddBookForm from './components/AddBookForm.js'
 import LogIn from './components/LogIn.js'
 import SignUp from './components/SignUp.js'
 import CurrentUserProvider from './components/CurrentUser'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   return (

@@ -1,50 +1,95 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { CurrentUser } from './CurrentUser';
-import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
-
     const { currentUser, setCurrentUser } = useContext(CurrentUser);
+    const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState('');
 
-    const navigate = useNavigate();  // For navigation
-
+    // Handle the logout functionality
     const handleLogout = () => {
-        // Clear token and user from localStorage
         localStorage.removeItem('authToken');
         localStorage.removeItem('user');
-
-        // Update the current user context to null
         setCurrentUser(null);
-
-        // Redirect to the login page
         navigate('/login');
+    };
+
+    // Handle the search form submission
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            // Redirect to the search page with the query as a parameter
+            navigate(`/search?query=${searchQuery}`);
+        }
     };
 
     return (
         <header>
-        <h1>Andi & Judd's Book Tracker</h1>
-        <nav>
-            <ul>
-                <li><Link to="/">Home</Link></li>
-                {currentUser ? (
-                    <>
-                        <li><Link to="/search">Search Books</Link></li>
-                        <li><Link to="/addbook">Add Books</Link></li>
-                        <li><Link to="/booklist">My Books</Link></li>
-                        <li>Welcome, {currentUser.email}!</li>
-                        <li><button onClick={handleLogout}>Logout</button></li>
-                    </>
-                ) : (
-                    <>
-                        <li><Link to="/login">Log In</Link></li>
-                        <li><Link to="/signup">Sign Up</Link></li>
-                    </>
-                )}
-            </ul>
-        </nav>
-    </header>
-    )
-}
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <div className="container-fluid">
+                    {/* Brand */}
+                    <Link className="navbar-brand" to="/">Andi & Judd's Book Tracker</Link>
 
-export default Header
+                    {/* Mobile toggle button */}
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div className="collapse navbar-collapse" id="navbarNav">
+                        <ul className="navbar-nav ms-auto">
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/">Home</Link>
+                            </li>
+                            {currentUser ? (
+                                <>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/search">Search Books</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/addbook">Add Books</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/booklist">My Books</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <span className="navbar-text">Welcome, {currentUser.email}!</span>
+                                    </li>
+                                    <li className="nav-item">
+                                        <button className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
+                                    </li>
+                                </>
+                            ) : (
+                                <>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/login">Log In</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/signup">Sign Up</Link>
+                                    </li>
+                                </>
+                            )}
+                        </ul>
+
+                        {/* Search Form */}
+                        {currentUser && (
+                            <form className="d-flex ms-auto" onSubmit={handleSearch}>
+                                <input
+                                    className="form-control me-2"
+                                    type="search"
+                                    placeholder="Search books"
+                                    aria-label="Search"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                                <button className="btn btn-outline-success" type="submit">Search</button>
+                            </form>
+                        )}
+                    </div>
+                </div>
+            </nav>
+        </header>
+    );
+};
+
+export default Header;
