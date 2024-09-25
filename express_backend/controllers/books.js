@@ -17,7 +17,7 @@ books.get('/', async (req, res) => {
 books.get('/:id', async (req, res) => {
     try {
         const foundBook = await books.findOne({
-            where: { bookID: req.params.id }
+            where: { bookId: req.params.id }
         })
         res.status(200).json(foundBook)
     } catch (error) {
