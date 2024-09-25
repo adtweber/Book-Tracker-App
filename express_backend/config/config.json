@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "Book_Tracker_development",
+    "username": "postgres",
+    "password": "postgres",
+    "database": "Book_Tracker",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
@@ -15,7 +15,7 @@
   },
   "production": {
     "username": "root",
-    "password": null,
+    "password": "postgres",
     "database": "Book_Tracker_production",
     "host": "127.0.0.1",
     "dialect": "mysql"
