@@ -6,13 +6,12 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate({ Book, UserBooks }) {
       User.belongsToMany(Book, {
-        through: 'user_books',  
+        through: 'user_books',
         as: 'books',
         foreignKey: 'userId'
       });
     }
   }
-
   // Initialize the User model with fields
   User.init({
     userId: {
@@ -22,22 +21,27 @@ module.exports = (sequelize, DataTypes) => {
     },
     firstName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     lastName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: true
+    },
+    passwordDigest: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
-    sequelize,
+    sequelize,  // Keep this inside the init options
     modelName: 'User',
     tableName: 'users',
     timestamps: false
   });
+
   return User;
 };

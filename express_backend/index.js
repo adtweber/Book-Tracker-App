@@ -8,8 +8,10 @@ app.use(express.json());
 app.use(cors());
 
 // CONTROLLERS 
-const booksController = require('./controllers/books')
-app.use('/books', booksController)
+app.use(express.urlencoded({ extended: true }))
+
+app.use('/books', require('./controllers/books'))
+app.use('/users', require('./controllers/users'))
 
 // home page //
 app.get('/', (req, res) => {
