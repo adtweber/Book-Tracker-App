@@ -43,7 +43,7 @@ books.put('/:id', async (req, res) => {
     try {
         const updatedBooks = await Book.update(req.body, {
             where: {
-                bookID: req.params.id
+                bookId: req.params.id
             }
         })
         res.status(200).json({
