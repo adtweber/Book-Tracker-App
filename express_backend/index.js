@@ -16,21 +16,17 @@ app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
 }))
-app.use(express.static('public'))
-app.use(express.urlencoded({ extended: true }))
-app.use(bodyParser.json())
-app.use(defineCurrentUser)
 
-// middleware to parse JSON bodies //
-app.use(express.json());
-app.use(cors());
+// Middleware for parsing incoming requests
+app.use(express.json());  // Parse JSON bodies
+app.use(express.urlencoded({ extended: true }));  // Parse URL-encoded bodies
+app.use(express.static('public'));
+app.use(defineCurrentUser);  // Middleware to define current user
 
 // CONTROLLERS 
-app.use(express.urlencoded({ extended: true }))
-
-app.use('/books', require('./controllers/books'))
-app.use('/users', require('./controllers/users'))
-app.use('/authentication', require('./controllers/authentication'))
+app.use('/books', require('./controllers/books')); 
+app.use('/users', require('./controllers/users')); 
+app.use('/authentication', require('./controllers/authentication'));
 
 // home page //
 app.get('/', (req, res) => {
