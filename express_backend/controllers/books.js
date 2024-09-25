@@ -13,18 +13,6 @@ books.get('/', async (req, res) => {
     }
 })
 
-// FIND A SPECIFIC BOOK
-books.get('/:id', async (req, res) => {
-    try {
-        const foundBook = await books.findOne({
-            where: { bookId: req.params.id }
-        })
-        res.status(200).json(foundBook)
-    } catch (error) {
-        res.status(500).json(error)
-    }
-})
-
 // CREATE A BOOK
 books.post('/', async (req, res) => {
     try {
@@ -35,6 +23,18 @@ books.post('/', async (req, res) => {
         })
     } catch(err) {
         res.status(500).json(err)
+    }
+})
+
+// FIND A SPECIFIC BOOK
+books.get('/:id', async (req, res) => {
+    try {
+        const foundBook = await books.findOne({
+            where: { bookId: req.params.id }
+        })
+        res.status(200).json(foundBook)
+    } catch (error) {
+        res.status(500).json(error)
     }
 })
 

@@ -1,41 +1,50 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Book extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+    static associate({ User, UserBooks }) {
+      Book.belongsToMany(User, {
+        through: UserBooks, 
+        as: 'users',      
+        foreignKey: 'bookID' 
+      });
     }
   }
+
+  // Initialize the Book model with fields
   Book.init({
     bookId: {
       type: DataTypes.INTEGER,
-      primaryKey: true,   
+      primaryKey: true,
       autoIncrement: true
     },
     title: {
       type: DataTypes.STRING,
-      allowNull: false, 
+      allowNull: false
     },
     cover: {
       type: DataTypes.STRING,
-      allowNull: false, 
+      allowNull: false
     },
     author: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
+    },
+    userId: {  // Foreign key to link Book to User
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'users',   // Refers to the User table
+        key: 'userId'
+      },
+      onDelete: 'CASCADE', // If a user is deleted, their books are deleted too
+      onUpdate: 'CASCADE'
     }
   }, {
     sequelize,
     modelName: 'Book',
     tableName: 'books',
-    timestamps: false  
+    timestamps: false
   });
 
   return Book;
