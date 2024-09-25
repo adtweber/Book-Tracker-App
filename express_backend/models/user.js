@@ -13,20 +13,32 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
+  
+  // Initialize the User model with fields
   User.init({
     userId: {
-      type: DataTypes.SMALLINT,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING,
-    passwordDigest: DataTypes.STRING
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    }
   }, {
     sequelize,
     modelName: 'User',
-    tableName: 'user'
+    tableName: 'users',
+    timestamps: false
   });
   return User;
 };
