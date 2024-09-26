@@ -31,7 +31,7 @@ const BookSearch = () => {
         }
         
         try {
-            const response = await axios.post('http://localhost:5000/mybooks/', newBook, {
+            const response = await axios.post('http://localhost:5000/books', newBook, {
                 headers: { 
                     'Content-Type': 'application/json', 
                     Authorization: `Bearer ${token}`  // Attach token in Authorization header
