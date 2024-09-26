@@ -6,7 +6,7 @@ function books() {
 	// FETCH all games from the server on component mount //
 	useEffect(() => {
 		const fetchData = async () => {
-			const response = await fetch(`http://localhost:5000/mybooks`);
+			const response = await fetch(`${process.env.REACT_APP_SERVER_URL}mybooks`);
 			const resData = await response.json();
 			setBooks(resData);
 		};
