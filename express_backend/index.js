@@ -28,6 +28,23 @@ app.use('/books', require('./controllers/books'));
 app.use('/users', require('./controllers/users')); 
 app.use('/authentication', require('./controllers/authentication'));
 
+app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(defineCurrentUser)
+
+// middleware to parse JSON bodies //
+app.use(express.json());
+app.use(cors());
+
+// CONTROLLERS 
+app.use(express.urlencoded({ extended: true }))
+
+app.use('/books', require('./controllers/books'))
+app.use('/users', require('./controllers/users'))
+app.use('/authentication', require('./controllers/authentication'))
+
+
 // home page //
 app.get('/', (req, res) => {
     res.send('Hello Team!');
