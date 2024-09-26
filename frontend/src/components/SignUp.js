@@ -11,7 +11,7 @@ const SignUp = () => {
     const handleSignUp = async (e) => {
         e.preventDefault()
         try {
-            const response = await axios.post('http://localhost:5000/users', { email, password, })
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}users`, { email, password, })
 
             if (response.data.success) {
                 navigate('/login')
