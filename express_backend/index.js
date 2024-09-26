@@ -7,35 +7,24 @@ const cookieSession = require('cookie-session')
 const defineCurrentUser = require('./middleware/defineCurrentUser')
 
 // Express Settings
-app.use(cookieSession({
-    name: 'session',
-    keys: [ process.env.SESSION_SECRET ],
-    maxAge: 1 * 60 * 60 * 1000 // 1 hour
-}))
 app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
 }))
 
 // Middleware for parsing incoming requests
-app.use(express.json());  // Parse JSON bodies
-app.use(express.urlencoded({ extended: true }));  // Parse URL-encoded bodies
-app.use(express.static('public'));
-app.use(defineCurrentUser);  // Middleware to define current user
+// app.use(express.json());  // Parse JSON bodies
 
-// CONTROLLERS 
-app.use('/books', require('./controllers/books')); 
-app.use('/users', require('./controllers/users')); 
-app.use('/authentication', require('./controllers/authentication'));
-
+// Middleware for parsing incoming requests
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(defineCurrentUser)
 
-// middleware to parse JSON bodies //
-app.use(express.json());
-app.use(cors());
+// CONTROLLERS 
+app.use('/books', require('./controllers/books')); 
+app.use('/users', require('./controllers/users')); 
+app.use('/authentication', require('./controllers/authentication'));
 
 // CONTROLLERS 
 app.use(express.urlencoded({ extended: true }))

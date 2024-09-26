@@ -25,11 +25,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     lastName: {
       type: DataTypes.STRING,
-      allowNull: true
-      allowNull: false
-    },
-    lastName: {
-      type: DataTypes.STRING,
       allowNull: false
     },
     email: {
@@ -37,18 +32,15 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true
     },
-
     password_digest: {
-    passwordDigest: {
       type: DataTypes.STRING,
       allowNull: false
     }
   }, {
-    sequelize,  // Keep this inside the init options
+    sequelize,  
     modelName: 'User',
     tableName: 'users',
     timestamps: false
   });
-
   return User;
 };
