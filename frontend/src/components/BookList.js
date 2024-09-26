@@ -78,4 +78,4 @@ const BookList = () => {
     );
 };
 
-export default BookList;
+export default DeleteButton;
