@@ -44,6 +44,25 @@ const BookList = () => {
         }
     };
 
+    const handleDelete = async (bookId) => {
+        console.log('Deleting book with ID:', bookId);  
+        try {
+            const response = await axios.delete(`http://localhost:5000/books/${bookId}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                }
+            });
+    
+            if (response.status === 200) {
+                console.log('Book deleted successfully');
+                // Update the books list after deletion
+                setBooks((prevBooks) => prevBooks.filter((book) => book.bookId !== bookId));
+            }
+        } catch (err) {
+            console.error('Error deleting book:', err);
+        }
+    };
     return (
         <div className="container mt-4">
             <h1 className="text-center mb-4">My Book List</h1>
@@ -78,6 +97,12 @@ const BookList = () => {
                                     >
                                         Finished
                                     </button>
+                                </div>
+                                <div>
+                                    <button onClick={() => {
+                                        console.log("Deleting book with ID:", book.bookId);  // Log the book.id here
+                                        handleDelete(book.bookId);
+                                    }}>DELETE</button>
                                 </div>
                             </div>
                         </div>
