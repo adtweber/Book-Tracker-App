@@ -31,7 +31,7 @@ const BookList = () => {
     // Define the handleStatusChange function inside the component
     const handleStatusChange = async (bookId, newStatus) => {
         try {
-            await axios.put(`/api/books/${bookId}/status`, { status: newStatus });
+            await axios.put(`http://localhost:5000/books/${bookId}`, { status: newStatus });
 
             // Update the state to reflect the new status
             setBooks((prevBooks) =>
@@ -81,19 +81,19 @@ const BookList = () => {
                                 <div className="btn-group" role="group">
                                     <button
                                         className={`btn btn-outline-primary ${book.status === 'Want to Read' ? 'active' : ''}`}
-                                        onClick={() => handleStatusChange(book.id, 'Want to Read')}
+                                        onClick={() => handleStatusChange(book.bookId, 'Want to Read')}
                                     >
                                         Want to Read
                                     </button>
                                     <button
                                         className={`btn btn-outline-warning ${book.status === 'Reading' ? 'active' : ''}`}
-                                        onClick={() => handleStatusChange(book.id, 'Reading')}
+                                        onClick={() => handleStatusChange(book.bookId, 'Reading')}
                                     >
                                         Reading
                                     </button>
                                     <button
                                         className={`btn btn-outline-success ${book.status === 'Finished' ? 'active' : ''}`}
-                                        onClick={() => handleStatusChange(book.id, 'Finished')}
+                                        onClick={() => handleStatusChange(book.bookId, 'Finished')}
                                     >
                                         Finished
                                     </button>
