@@ -26,6 +26,7 @@ const Login = () => {
     
             if (response.data.token) {
                 localStorage.setItem('authToken', response.data.token);
+                localStorage.setItem('user', JSON.stringify(response.data.user));  // Persist user info
                 setCurrentUser(response.data.user);
                 navigate('/');
             }
