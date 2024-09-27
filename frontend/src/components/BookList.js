@@ -7,11 +7,21 @@ const BookList = () => {
     // Function to fetch books from the backend API
     useEffect(() => {
         const fetchBooks = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/books');
-                setBooks(response.data);
-            } catch (error) {
-                console.error('Error fetching books:', error);
+            const token = localStorage.getItem('authToken'); 
+    
+            if (token) {
+                try {
+                    const response = await axios.get('http://localhost:5000/books', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`  
+                        }
+                    });
+                    setBooks(response.data);  
+                } catch (error) {
+                    console.error('Error fetching books:', error);  // Handle errors
+                }
+            } else {
+                console.error('No token found, please log in again');
             }
         };
 
