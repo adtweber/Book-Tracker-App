@@ -1,34 +1,32 @@
-import { createContext, useState, useEffect } from "react";
-import axios from 'axios'
+import { useEffect, createContext, useState } from "react";
+
 
 export const CurrentUser = createContext()
 
 function CurrentUserProvider({ children }) {
-    const [currentUser, setCurrentUser] = useState(null);
+
+    const [currentUser, setCurrentUser] = useState(null)
 
     useEffect(() => {
-        const token = localStorage.getItem('authToken');
-
-        if (token) {
-            // Fetch the current user from the backend using the token
-            axios.get('http://localhost:5000/login/profile', {
+        const getLoggedInUser = async () => {
+            console.log('get loggedinuser')
+            let response = await fetch('http://localhost:5000/authentication/profile', {
                 headers: {
-                    'Authorization': `Bearer ${token}`  // Send the token
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
                 }
-            }).then(response => {
-                setCurrentUser(response.data.user);  // Set the user from response
-            }).catch(error => {
-                console.error('Token is invalid or expired', error);
-                localStorage.removeItem('authToken');  // Remove invalid token
-            });
+            })
+            let user = await response.json()
+            setCurrentUser(user)
+            console.log(user)
         }
-    }, []);  // Run only on component mount
+        getLoggedInUser()
+    }, [])
 
     return (
         <CurrentUser.Provider value={{ currentUser, setCurrentUser }}>
             {children}
         </CurrentUser.Provider>
-    );
+    )
 }
 
 export default CurrentUserProvider
