@@ -29,6 +29,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'Want to Read'
+    }, 
     author: {
       type: DataTypes.STRING,
       allowNull: false

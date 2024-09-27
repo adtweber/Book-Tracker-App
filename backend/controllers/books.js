@@ -65,7 +65,7 @@ books.get('/:id', async (req, res) => {
     }
 })
 
-// UPDATE A BAND
+// UPDATE A BOOK
 books.put('/:id', async (req, res) => {
     try {
         const updatedBooks = await Book.update(req.body, {
@@ -74,7 +74,7 @@ books.put('/:id', async (req, res) => {
             }
         })
         res.status(200).json({
-            message: `Successfully updated ${updatedBooks} band(s)`
+            message: `Successfully updated ${updatedBooks} book(s)`
         })
     } catch(err) {
         res.status(500).json(err)
