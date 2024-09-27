@@ -36,7 +36,7 @@ const BookList = () => {
             // Update the state to reflect the new status
             setBooks((prevBooks) =>
                 prevBooks.map((book) =>
-                    book.id === bookId ? { ...book, status: newStatus } : book
+                    book.bookId === bookId ? { ...book, status: newStatus } : book
                 )
             );
         } catch (error) {
@@ -100,7 +100,7 @@ const BookList = () => {
                                 </div>
                                 <div>
                                     <button onClick={() => {
-                                        console.log("Deleting book with ID:", book.bookId);  // Log the book.id here
+                                        console.log("Deleting book with ID:", book.bookId);  
                                         handleDelete(book.bookId);
                                     }}>DELETE</button>
                                 </div>
