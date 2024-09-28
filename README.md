@@ -15,6 +15,8 @@ This book tracker application was submitted as the final project for our Softwar
 
 ---
 
+![Initial outline for the project build](image.png)
+
 CHALLENGE/FEATURE
 
 ```
@@ -67,6 +69,6 @@ Submit an issue [here](https://github.com/adtweber/Book-Tracker-App/issues) expl
 
 
 ## License
-[MIT]
+[MIT](https://github.com/adtweber/Book-Tracker-App/blob/main/LICENSE.txt)
 
 
