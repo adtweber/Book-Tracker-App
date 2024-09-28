@@ -15,27 +15,10 @@ This book tracker application was submitted as the final project for our Softwar
 
 ---
 
-CHALLENGE/FEATURE
+This was the initial outline created to guide the build of the Book Tracker application. 
 
-```
-CODE SNIPPET
-```
+![Initial outline for the project build](image.png)
 
-CHALLENGE/FEATURE
-
-```
-CODE SNIPPET
-```
-
-```
-CODE SNIPPET
-```
-
-CHALLENGE/FEATURE
-
-```
-CODE SNIPPET
-```
 
 ### Potential Roadmap
 
@@ -43,12 +26,9 @@ CODE SNIPPET
 
 Here are some stretch goals we have discussed to be implemented in the future. 
 
-- Stretch goal 1
-- Stretch goal 2
-- Stretch goal 3
-- Stretch goal 4
-- Stretch goal 5
-
+- Book status toggle function where users can specify whether they want to read, are currently reading, or have read a book
+- Social engagement like commmenting and following other user profiles
+- Reading goal tracker with badges or other rewards for streaks
 
 ## Contributing
 
@@ -67,6 +47,6 @@ Submit an issue [here](https://github.com/adtweber/Book-Tracker-App/issues) expl
 
 
 ## License
-[MIT]
+[MIT](https://github.com/adtweber/Book-Tracker-App/blob/main/LICENSE.txt)
 
 
