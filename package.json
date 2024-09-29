@@ -1,0 +1,16 @@
+{
+  "name": "book-tracker-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run start --prefix backend",   
+    "heroku-postbuild": "npm install --prefix frontend && npm run build --prefix frontend" 
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": "18.19.1"  
+  }
+}
