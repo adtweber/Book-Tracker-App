@@ -7,15 +7,7 @@ const defineCurrentUser = require('./middleware/defineCurrentUser')
 const path = require('path')
 
 // Express Settings
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true
-}))
-
-// Middleware for parsing incoming requests
-// app.use(express.json());  // Parse JSON bodies
-
-// Middleware for parsing incoming requests
+app.use(cors()); 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -24,6 +16,10 @@ app.use(defineCurrentUser)
 // serve static front end in production mode
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));  // Serve React's index.html
+    });
 }
 
 // CONTROLLERS 
